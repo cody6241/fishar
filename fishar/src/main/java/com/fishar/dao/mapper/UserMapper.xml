@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间应该是对应接口的包名+接口名 -->
+<mapper namespace="com.fishar.dao.IUserDAO">
+
+	<resultMap type="User" id="userMap">
+		<id column="user_id" property="userID"/>
+		<result column="user_name" property="userName"/>
+		<result column="nick_name" property="nickName"/>
+		<result column="credits" property="credits"/>
+		<result column="password" property="password"/>
+		<result column="last_visit" property="lastVisit"/>
+		<result column="last_ip" property="lastIP"/>
+		<result column="phone_number" property="phoneNumber"/>
+	</resultMap>
+	
+	<select id="selectUser" parameterType="User" resultMap="userMap">
+	select * from t_user <include refid="whereSQL"/>
+	</select>
+	
+	<sql id="whereSQL">
+		where 1=1 
+		<if test="user.userID != null and user.userID != ''"> and user_id = #{user.userID} </if>
+		<if test="user.userName != null and user.userName != ''"> and user_name = #{user.userName} </if>
+		<if test="user.credits != null and user.credits != ''"> and credits = #{user.credits} </if>
+		<if test="user.password != null and user.password != ''"> and password = #{user.password} </if>
+		<if test="user.lastVisit != null and user.lastVisit != ''"> and last_visit = #{user.lastVisit} </if>
+		<if test="user.lastIP != null and user.lastIP != ''"> and lastIP = #{user.lastIP} </if>
+	</sql>
+	
+	<update id="updateUser" parameterType="User">
+		update t_user <include refid="setSQL"/> where user_id = #{user.userID}
+	</update>
+	
+	<sql id="setSQL">
+		set user_id = #{user.userID}
+		<if test="user.userName != null and user.userName != ''"> , user_name = #{user.userName} </if>
+		<if test="user.credits != null and user.credits != ''"> , credits = #{user.credits} </if>
+		<if test="user.password != null and user.password != ''"> , password = #{user.password} </if>
+		<if test="user.lastVisit != null"> , last_visit = #{user.lastVisit} </if>
+		<if test="user.lastIP != null and user.lastIP != ''"> , last_ip = #{user.lastIP} </if>
+		<if test="user.phoneNumber != null and user.phoneNumber != ''"> , phone_number = #{user.phoneNumber} </if>
+	</sql>
+	
+	<insert id="add" parameterType="User">
+		insert into t_user(user_name,nick_name,phone_number,password) 
+		values(#{user.userName},#{user.nickName},#{user.phoneNumber},#{user.password});
+	</insert>
+	
+</mapper>
