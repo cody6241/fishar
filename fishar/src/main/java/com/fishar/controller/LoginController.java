@@ -63,14 +63,16 @@ public class LoginController extends BaseController{
 
 	@RequestMapping(value="/login.html")
 	public ModelAndView login(HttpServletRequest request,HttpServletResponse response){
-		String sessionID = request.getSession().getId();
-		Map<String,Object> map = FisharContext.getLoginSessionMap().get(sessionID);
-		if(map != null){
-			
-		}
-		
 		ModelAndView mv = new ModelAndView("login");
 		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/logout.do")
+	public String logout(HttpServletRequest request,HttpServletResponse response){
+		String sessionID = request.getSession().getId();
+		FisharContext.getLoginSessionMap().remove(sessionID);
+		return this.resultInfo("success", "");
 	}
 	
 	@RequestMapping(value="/404.html")

@@ -48,7 +48,7 @@
                                 <li><a class="J_menuItem" href="mailbox.html">信箱</a>
                                 </li>
                                 <li class="divider"></li>
-                                <li><a href="login.html">安全退出</a>
+                                <li><a id="logout">安全退出</a>
                                 </li>
                             </ul>
                         </div>
@@ -924,6 +924,24 @@
     <script src="js/hplus.min.js?v=4.0.0"></script>
     <script type="text/javascript" src="js/contabs.min.js"></script>
     <script src="js/plugins/pace/pace.min.js"></script>
+    <script>
+    $("#logout").click(function(){
+    	var sure = confirm("确认退出吗？");
+    	if(sure = true){
+	    	$.ajax({
+	    		url:"logout.do",
+	    		dataType:"json",
+	    		success:function(data){
+	    			if(data.result=="success"){
+	    				location.href="login.html";
+	    			}else{
+	    				alert(data.msg);
+	    			}
+	    		}
+	    	});
+    	}
+    });
+    </script>
 </body>
 
 </html>
