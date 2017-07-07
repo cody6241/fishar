@@ -10,9 +10,6 @@ public class FisharContext {
 		if(loginSessionMap == null){
 			loginSessionMap = new ConcurrentHashMap<String,Map<String,Object>>();
 		}
-		
-		
-		
 		return loginSessionMap;
 	}
 }
